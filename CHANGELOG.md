@@ -1,5 +1,30 @@
 # ChangeLog
 
+## v0.1.4 - 2024-06-17
+
+### Enhancements:
+
+* feat(docs): add resolution column in board instructions by @lboue (#51)
+
+### Bugfixes:
+
+* fix(conf): fix error when include inside file (#52)
+* fix(docs): switch M5Stack doc links to english by @lboue (#50)
+
+## v0.1.3 - 2024-06-14
+
+### Enhancements:
+
+* feat(board): add add new board M5CORE2 by @MacChu0315-Espressif (#40)
+* feat(board): add add new board M5DIAL by @MacChu0315-Espressif (#41)
+* feat(board): add add new board M5CORES3 by @MacChu0315-Espressif (#45)
+* feat(example): add support for PlatformIO by @isthaison (#37)
+
+### Bugfixes:
+
+* fix(version): fix version mismatch
+* fix(docs): update files related to version and board M5CORE2
+
 ## v0.1.2 - 2024-06-01
 
 ### Enhancements:

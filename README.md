@@ -4,7 +4,7 @@
 
 * [中文版本](./README_CN.md)
 
-ESP32_Display_Panel is an Arduino library designed for ESP SoCs to drive display panels and facilitate rapid GUI development. Users can develop directly for a variety of [supported development boards](src/board/README.md) or create custom ones through simple adaptation. Additionally, ESP32_Display_Panel is compatible with various LCD and touch drivers, allowing users to develop using standalone drivers as needed.
+ESP32_Display_Panel is an Arduino library designed for ESP SoCs to drive display panels and facilitate rapid GUI development. Users can develop directly for a variety of [supported development boards](src/board/Board_Instructions.md) or create custom ones through simple adaptation. Additionally, ESP32_Display_Panel is compatible with various LCD and touch drivers, allowing users to develop using standalone drivers as needed.
 
 ESP32_Display_Panel encapsulates various components from the [Espressif Components Registry](https://components.espressif.com/), requiring development based on [arduino-esp32](https://github.com/espressif/arduino-esp32), and can be directly downloaded from the Arduino IDE.
 
@@ -24,11 +24,13 @@ ESP32_Display_Panel encapsulates various components from the [Espressif Componen
       - [Using Supported Development Boards](#using-supported-development-boards)
       - [Using Custom Development Boards](#using-custom-development-boards)
     - [Usage Examples](#usage-examples)
-      - [LCD](#lcd)
-      - [Touch](#touch)
-      - [Panel](#panel)
-      - [LVGL v8](#lvgl-v8)
-      - [SquareLine](#squareline)
+      - [Arduino IDE](#arduino-ide)
+        - [LCD](#lcd)
+        - [Touch](#touch)
+        - [Panel](#panel)
+        - [LVGL v8](#lvgl-v8)
+        - [SquareLine](#squareline)
+      - [PlatformIO](#platformio)
   - [Other Relevant Instructions](#other-relevant-instructions)
     - [Configuring Supported Development Boards](#configuring-supported-development-boards)
     - [Configuring LVGL](#configuring-lvgl)
@@ -38,6 +40,7 @@ ESP32_Display_Panel encapsulates various components from the [Espressif Componen
     - [How to Install ESP32\_Display\_Panel in Arduino IDE?](#how-to-install-esp32_display_panel-in-arduino-ide)
     - [Where are the installation directory for arduino-esp32 and the SDK located?](#where-are-the-installation-directory-for-arduino-esp32-and-the-sdk-located)
     - [How to fix screen drift issue when driving RGB LCD with ESP32-S3?](#how-to-fix-screen-drift-issue-when-driving-rgb-lcd-with-esp32-s3)
+    - [How to Use ESP32\_Display\_Panel on PlatformIO?](#how-to-use-esp32_display_panel-on-platformio)
 
 ## Overview
 
@@ -55,14 +58,15 @@ The functional block diagram of ESP32_Display_Panel is as follows, mainly compri
 
 ### Development Boards
 
-Below is a list of [supported development boards](src/board/README.md):
+Below is a list of [supported development boards](src/board/Board_Instructions.md):
 
 | **Manufacturer** | **Board Model** |
 | --------------- | --------------- |
-| [Espressif](src/board/README.md#espressif) | ESP32-C3-LCDkit, ESP32-S3-Box, ESP32-S3-Box-3, ESP32-S3-Box-3(beta), ESP32-S3-Box-Lite, ESP32-S3-EYE, ESP32-S3-Korvo-2, ESP32-S3-LCD-EV-Board, ESP32-S3-LCD-EV-Board-2, ESP32-S3-USB-OTG |
-| [Jingcai](src/board/README.md#shenzhen-jingcai-intelligent) | ESP32-4848S040C_I_Y_3 |
+| [Espressif](src/board/Board_Instructions.md#espressif) | ESP32-C3-LCDkit, ESP32-S3-Box, ESP32-S3-Box-3, ESP32-S3-Box-3(beta), ESP32-S3-Box-Lite, ESP32-S3-EYE, ESP32-S3-Korvo-2, ESP32-S3-LCD-EV-Board, ESP32-S3-LCD-EV-Board-2, ESP32-S3-USB-OTG |
+| [M5Stack](https://m5stack.com/) | M5STACK-M5CORE2, M5STACK-M5DIAL, M5STACK-M5CORES3 |
+| [Jingcai](src/board/Board_Instructions.md#shenzhen-jingcai-intelligent) | ESP32-4848S040C_I_Y_3 |
 
-Developers and manufacturers are welcome to submit PRs to add more development boards.
+Developers and manufacturers are welcomed to contribute PRs to add more development boards. For detailed instructions, please refer to the [`Board Development Guide`](./src/board/Board_Contribution_Guide.md).
 
 ### LCD Controllers
 
@@ -255,9 +259,13 @@ Here is a snippet of the modified `ESP_Panel_Board_Custom.h` file:
 
 ### Usage Examples
 
-Below are some examples of using ESP32_Display_Panel. You can access them in the Arduino IDE by navigating to `File` > `Examples` > `ESP32_Display_Panel`. If you cannot find the `ESP32_Display_Panel` option, please check if the library has been installed correctly and ensure that an ESP development board is selected.
+The following are some examples of using ESP32_Display_Panel on different development platforms.
 
-#### LCD
+#### Arduino IDE
+
+You can access them in the Arduino IDE by navigating to `File` > `Examples` > `ESP32_Display_Panel`. If you cannot find the `ESP32_Display_Panel` option, please check if the library has been installed correctly and ensure that an ESP development board is selected.
+
+##### LCD
 
 The following examples demonstrate how to develop different interface and model LCDs using standalone drivers and test them by displaying color bars:
 
@@ -266,63 +274,42 @@ The following examples demonstrate how to develop different interface and model 
 * [Single RGB](examples/LCD/RGB/)
 * [3-wire SPI + RGB](examples/LCD/3wireSPI_RGB/)
 
-#### Touch
+##### Touch
 
 The following example demonstrates how to develop touch screens of different interfaces and models using standalone drivers and test them by printing touch point coordinates:
 
 * [I2C](examples/Touch/I2C/)
 * [SPI](examples/Touch/SPI/)
 
-#### Panel
+##### Panel
 
 The following example demonstrates how to develop built-in or custom development boards using the `ESP_Panel` driver:
 
 * [Panel Test](examples/Panel/PanelTest/): This example tests by displaying color bars and printing touch point coordinates.
 
-#### LVGL v8
+##### LVGL v8
 
 For configuring LVGL (v8.3.x), please refer to [here](#configuring-lvgl) for more detailed information.
 
 * [Porting](examples/LVGL/v8/Porting/): This example demonstrates how to port LVGL (v8.3.x). And for RGB LCD, it can enable the avoid tearing fucntion.
 * [Rotation](examples/LVGL/v8/Rotation/): This example demonstrates how to use LVGL to rotate the display.
 
-#### SquareLine
+##### SquareLine
 
 To port the SquareLine project (v1.3.x), please refer to [here](#porting-squareline-project) for more detailed information.
 
 - [Porting](examples/SquareLine/v8/Porting/): This example demonstrates how to port the SquareLine project.
 - [WiFiClock](examples/SquareLine/v8/WiFiClock/): This example implements a simple Wi-Fi clock and can display weather information.
 
+#### PlatformIO
+
+- [PlatformIO](examples/PlatformIO/): This example demonstrates how to use ESP32_Display_Panel in PlatformIO. By default, it is suitable for the **ESP32-S3-LCD-EV-Board** and **ESP32-S3-LCD-EV-Board-2** development boards. Users need to modify the [boards/ESP-LCD.json](examples/PlatformIO/boards/ESP-LCD.json) file according to the actual situation.
+
 ## Other Relevant Instructions
 
 ### Configuring Supported Development Boards
 
-Below are recommended configurations for developing GUI applications on different development boards. These settings can be adjusted according to specific requirements, and users can navigate to the `Tools` menu in the Arduino IDE to configure the following settings.
-
-|    Supported Boards     |   Selected Board   |  PSRAM   | Flash Mode | Flash Size | USB CDC On Boot |    Partition Scheme     |
-| :---------------------: | :----------------: | :------: | :--------: | :--------: | :-------------: | :---------------------: |
-|     ESP32-C3-LCDkit     | ESP32C3 Dev Module | Disabled |    QIO     | 4MB (32Mb) |     Enabled     | Default 4MB with spiffs |
-|      ESP32-S3-Box       |    ESP32-S3-Box    |    -     |     -      |     -      |        -        |     16M Flash (3MB)     |
-|     ESP32-S3-Box-3      | ESP32S3 Dev Module |   OPI    | QIO 80MHz  |    16MB    |     Enabled     |     16M Flash (3MB)     |
-|  ESP32-S3-Box-3(beta)   | ESP32S3 Dev Module |   OPI    | QIO 80MHz  |    16MB    |     Enabled     |     16M Flash (3MB)     |
-|    ESP32-S3-Box-Lite    |    ESP32-S3-Box    |    -     |     -      |     -      |        -        |     16M Flash (3MB)     |
-|      ESP32-S3-EYE       | ESP32S3 Dev Module |   OPI    | QIO 80MHz  |    8MB     |     Enabled     |     8M with spiffs      |
-|    ESP32-S3-Korvo-2     | ESP32S3 Dev Module |   OPI    | QIO 80MHz  |    16MB    |    Disabled     |     16M Flash (3MB)     |
-|  ESP32-S3-LCD-EV-Board  | ESP32S3 Dev Module |   OPI    | QIO 80MHz  |    16MB    | **See Note 1**  |     16M Flash (3MB)     |
-| ESP32-S3-LCD-EV-Board-2 | ESP32S3 Dev Module |   OPI    | QIO 80MHz  |    16MB    | **See Note 1**  |     16M Flash (3MB)     |
-|    ESP32-S3-USB-OTG     |  ESP32-S3-USB-OTG  |    -     |     -      |     -      |        -        |     8M with spiffs      |
-|  ESP32-4848S040C_I_Y_3  | ESP32S3 Dev Module |   OPI    | QIO 80MHz  |    16MB    |    Disabled     |     16M Flash (3MB)     |
-
-**Notes:**
-
-1. Enable or disable `USB CDC On Boot` based on the type of port used:
-
-   * Disable this configuration if using **UART** port; enable it if using **USB** port.
-   * If this configuration differs from previous flashing, first enable `Erase All Flash Before Sketch Upload`, then it can be disabled after flashing.
-   * If this configuration does not match the actual port type, it will prevent the development board from printing serial logs correctly.
-
-2. To view more output logs, set `Core Debug Level` to `Info` or a lower level.
-3. If the predefined partition schemes provided by ESP32 do not meet the requirements, users can also select `Custom` in the "Partition Scheme" and create a custom partition table file `Custom.csv` in the `hardware/esp32/3.x.x/tools/partitions` directory under the [arduino-esp32 installation directory](#where-are-the-installation-directory-for-arduino-esp32-and-the-sdk-located). For detailed information on partition tables, please refer to the [ESP-IDF documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/partition-tables.html).
+For details on how to configure the supported development boards in the Arduino IDE, see [Board_Instructions.md](./src/board/Board_Instructions.md).
 
 ### Configuring LVGL
 
@@ -470,3 +457,7 @@ When encountering screen drift issue when driving RGB LCD with ESP32-S3, you can
     lcd_bus->begin();
     ...
     ```
+
+### How to Use ESP32_Display_Panel on PlatformIO?
+
+You can refer to the example [PlatformIO](examples/PlatformIO/) to use the ESP32_Display_Panel library in PlatformIO. By default, it is suitable for the **ESP32-S3-LCD-EV-Board** and **ESP32-S3-LCD-EV-Board-2** development boards. You need to modify the [boards/ESP-LCD.json](examples/PlatformIO/boards/ESP-LCD.json) file according to the actual situation.
